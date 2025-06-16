@@ -4,11 +4,20 @@
  */
 package org.getfin.vistas;
 
+import org.getfin.controlador.loginController;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 /**
  *
  * @author axel
  */
-public class Login extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame implements ActionListener, MouseListener {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
@@ -17,6 +26,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        jLabel3.addMouseListener(this);
+
     }
 
 
@@ -29,11 +40,11 @@ public class Login extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        textField1 = new java.awt.TextField();
+        txtEmail = new java.awt.TextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jpContraseña = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -80,9 +91,9 @@ public class Login extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(217, 217, 217));
 
-        textField1.setBackground(new java.awt.Color(217, 217, 217));
-        textField1.setName(""); // NOI18N
-        textField1.setText("Email");
+        txtEmail.setBackground(new java.awt.Color(217, 217, 217));
+        txtEmail.setName(""); // NOI18N
+        txtEmail.setText("Email");
 
         jLabel4.setFont(new java.awt.Font("Ubuntu Sans", 0, 15)); // NOI18N
         jLabel4.setText("Email");
@@ -97,7 +108,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel4)
                 .addGap(21, 21, 21)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -109,15 +120,15 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jLabel4)
-                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(217, 217, 217));
         jPanel5.setPreferredSize(new java.awt.Dimension(517, 75));
 
-        jPasswordField1.setBackground(new java.awt.Color(217, 217, 217));
-        jPasswordField1.setText("jPasswordField1");
+        jpContraseña.setBackground(new java.awt.Color(217, 217, 217));
+        jpContraseña.setText("jPasswordField1");
         jLabel5.setFont(new java.awt.Font("Ubuntu Sans", 0, 15)); // NOI18N
         jLabel5.setText("Password");
 
@@ -131,7 +142,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -143,7 +154,7 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jpContraseña, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -237,7 +248,11 @@ public class Login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+
+
+
+
+    // Variables declaration - do not modify                     
     private java.awt.Checkbox checkbox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -252,7 +267,44 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPasswordField jPasswordField1;
-    private java.awt.TextField textField1;
-    // End of variables declaration//GEN-END:variables
+    private javax.swing.JPasswordField jpContraseña;
+    private java.awt.TextField txtEmail;
+    //private loginController loginController;
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+        String userName = txtEmail.getText();
+        String userContraseña = new String(jpContraseña.getPassword());
+        txtEmail.setText("");
+        jpContraseña.setText("");
+        System.out.println("Usuario: " + userName);
+        System.out.println("Contraseña: " + userContraseña);
+
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
+    }
 }
