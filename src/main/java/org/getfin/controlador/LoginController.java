@@ -7,11 +7,11 @@ import org.getfin.util.HibernateUtil;
 
 import java.util.List;
 
-public class loginController {
+public class LoginController {
 
-    private static loginController instance;
+    private static LoginController instance;
 
-    public loginController(){
+    public LoginController(){
 
     }
     public void guardarCliente(Usuario usuario){
@@ -31,9 +31,9 @@ public class loginController {
         return clienteIGenericService.getAll();
     }
 
-    public static loginController getInstance() {
+    public static LoginController getInstance() {
         if (instance == null) {
-            instance = new loginController();
+            instance = new LoginController();
         }
         return instance;
     }

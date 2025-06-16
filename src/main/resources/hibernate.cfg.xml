@@ -11,6 +11,18 @@
         <property name="current_session_context_class">thread</property>
         <property name="hbm2ddl.auto">update</property>
         <mapping class="org.getfin.modelos.Usuario"/>
+        <mapping class="org.getfin.modelos.Animal"/>
+        <mapping class="org.getfin.modelos.AnimalAgrupado"/>
+        <mapping class="org.getfin.modelos.Cliente"/>
+        <mapping class="org.getfin.modelos.DetalleEgreso"/>
+        <mapping class="org.getfin.modelos.DetalleIngreso"/>
+        <mapping class="org.getfin.modelos.Egreso"/>
+        <mapping class="org.getfin.modelos.Herramienta"/>
+        <mapping class="org.getfin.modelos.Ingreso"/>
+        <mapping class="org.getfin.modelos.MovimientoInventario"/>
+        <mapping class="org.getfin.modelos.Producto"/>
+        <mapping class="org.getfin.modelos.Raza"/>
+
 
     </session-factory>
 </hibernate-configuration>

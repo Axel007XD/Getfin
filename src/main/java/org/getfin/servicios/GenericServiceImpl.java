@@ -21,7 +21,7 @@ public class GenericServiceImpl<T> implements IGenericService<T> {
 
     @Override
     public List<T> getAll() {
-        return dao.query("FROM"+cl.getSimpleName(),null)==null?null:dao.query("FROM"+cl.getSimpleName(),null);
+        return dao.query("FROM "+cl.getSimpleName(),null)==null?null:dao.query("FROM "+cl.getSimpleName(),null);
     }
 
     @Override
@@ -75,4 +75,5 @@ public class GenericServiceImpl<T> implements IGenericService<T> {
     public List<T> query(String hsql, Map<String, Object> params) {
         return (List<T>) dao.query(hsql,params);
     }
+
 }

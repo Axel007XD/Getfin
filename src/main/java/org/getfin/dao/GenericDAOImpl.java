@@ -59,24 +59,26 @@ public class GenericDAOImpl<T> implements  IGenericDAO<T>{
     }
 
     @Override
-    public List<T> query(String hsql, Map<String, Object> params) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery(hsql);
-        if(params != null){
-            for(String i: params.keySet()){
-                query.setParameter(i, params.get(i));
+    public List<T> query(String hsql, Map<String, Object> params){
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery(hsql);
+            if(params != null){
+                for(String i: params.keySet()){
+                    query.setParameter(i, params.get(i));
+                }
             }
+
+            List<T> result = null;
+            if((!hsql.toUpperCase().contains("DELETE"))
+                    && (!hsql.toUpperCase().contains("UPDATE"))
+                    && (!hsql.toUpperCase().contains("INSERT"))
+            ) {
+                result = query.list();
+            }
+            session.getTransaction().commit();
+            return result;
         }
 
-        List<T> result = null;
-        if((!hsql.toUpperCase().contains("DELETE"))
-                && (!hsql.toUpperCase().contains("UPDATE"))
-                && (!hsql.toUpperCase().contains("INSERT"))
-        ) {
-            result = query.list();
-        }
-        session.getTransaction().commit();
-        return result;
-    }
 }
+

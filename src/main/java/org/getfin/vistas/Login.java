@@ -4,14 +4,15 @@
  */
 package org.getfin.vistas;
 
-import org.getfin.controlador.loginController;
+import org.getfin.controlador.LoginController;
+import org.getfin.modelos.Usuario;
+
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -27,6 +28,11 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
     public Login() {
         initComponents();
         jLabel3.addMouseListener(this);
+        this.setTitle("Login");
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        loginController= new LoginController();
 
     }
 
@@ -94,8 +100,8 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
         txtEmail.setBackground(new java.awt.Color(217, 217, 217));
         txtEmail.setName(""); // NOI18N
         txtEmail.setText("Email");
-
-        jLabel4.setFont(new java.awt.Font("Ubuntu Sans", 0, 15)); // NOI18N
+        //txtEmail.setBorder();
+        jLabel4.setFont(new java.awt.Font("Inter", Font.BOLD, 18)); // NOI18N
         jLabel4.setText("Email");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Perrfill 1.png"))); // NOI18N
@@ -128,8 +134,9 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
         jPanel5.setPreferredSize(new java.awt.Dimension(517, 75));
 
         jpContraseña.setBackground(new java.awt.Color(217, 217, 217));
-        jpContraseña.setText("jPasswordField1");
-        jLabel5.setFont(new java.awt.Font("Ubuntu Sans", 0, 15)); // NOI18N
+        jpContraseña.setText("contraseña");
+        jpContraseña.setBorder(null);
+        jLabel5.setFont(new java.awt.Font("Inter",java.awt.Font.BOLD, 18)); //
         jLabel5.setText("Password");
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Contraseña 1.png"))); // NOI18N
@@ -245,13 +252,6 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
         setVisible(true);
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    /**
-     * @param args the command line arguments
-     */
-
-
-
-
     // Variables declaration - do not modify                     
     private java.awt.Checkbox checkbox1;
     private javax.swing.JLabel jLabel1;
@@ -269,28 +269,34 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPasswordField jpContraseña;
     private java.awt.TextField txtEmail;
-    //private loginController loginController;
+    private LoginController loginController;
+    private List<Usuario> usuarioList = new ArrayList<>();
 
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-
-    }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
+        usuarioList=loginController.getClientes();
         String userName = txtEmail.getText();
         String userContraseña = new String(jpContraseña.getPassword());
         txtEmail.setText("");
         jpContraseña.setText("");
-        System.out.println("Usuario: " + userName);
-        System.out.println("Contraseña: " + userContraseña);
 
+        boolean autenticado = false;
 
+        if (usuarioList != null) {
+            for (Usuario usuario : usuarioList) {
+                if (usuario.getNombreUsuario().equals(userName) && usuario.getContrasena().equals(userContraseña)) {
+                    autenticado = true;
+                    break;
+                }
+            }
+        }
+
+        if (autenticado) {
+            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta.");
+        }
     }
 
     @Override
@@ -307,4 +313,15 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
     public void mouseExited(MouseEvent mouseEvent) {
 
     }
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+
+    }
+
+
 }
