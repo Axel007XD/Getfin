@@ -1,15 +1,15 @@
 package org.getfin;
 
-import org.getfin.vistas.FormularioIA;
-import org.getfin.vistas.FormularioIC;
-import org.getfin.vistas.FormularioIP;
-import org.getfin.vistas.Login;
+import org.getfin.Componentes.Barras;
+import org.getfin.vistas.*;
 
 public class App {
 
     public static void main(String[] args) {
 
-        new Login();
+        //new Login();
+        //new VentanaPrincipal();
+        new VentanaPrincipal();
 
     }
 }

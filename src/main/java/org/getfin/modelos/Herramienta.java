@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +28,9 @@ public class Herramienta {
 
 
     @Temporal(TemporalType.DATE)
-    private Date fechaAdquisicion;
+    private LocalDate fechaAdquisicion;
 
-    public Herramienta(String nombre, String descripcion, int cantidad, Date fechaAdquisicion) {
+    public Herramienta(String nombre, String descripcion, int cantidad, LocalDate fechaAdquisicion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidad = cantidad;

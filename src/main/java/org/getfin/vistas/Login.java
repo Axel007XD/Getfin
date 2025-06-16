@@ -4,13 +4,15 @@
  */
 package org.getfin.vistas;
 
-import org.getfin.controlador.LoginController;
-import org.getfin.modelos.Usuario;
+import org.getfin.controlador.*;
+import org.getfin.modelos.*;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +35,94 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginController= new LoginController();
+        // Crear un usuario de ejemplo
+        UsuarioController usuarioController = new UsuarioController();
+        Usuario usuario = new Usuario();
+        usuario.setNombreUsuario("admin");
+        usuario.setContrasena("admin123");
+        usuario.setRol(Usuario.Rol.admin);
+        usuarioController.guardaUsuario(usuario);
+        usuarioList = usuarioController.getUsuario();
 
+
+
+        ProductoController productoController= new ProductoController();
+
+        Producto producto = new Producto();
+        producto.setNombre("Leche");
+        producto.setCategoria(Producto.CategoriaProducto.valueOf("animal"));
+        productoController.guardarCliente(producto);
+
+        HerramientaController herramientaController= new HerramientaController();
+        // Crear una herramienta
+        Herramienta herramienta = new Herramienta();
+        herramienta.setNombre("Machete");
+        herramienta.setDescripcion("Herramienta de corte");
+        herramienta.setCantidad(3);
+        herramienta.setFechaAdquisicion(LocalDate.now());
+        herramientaController.guardarHerramienta(herramienta);
+
+        AnimalController animalController = new AnimalController();
+        // Crear un animal
+        Animal animal = new Animal();
+        animal.setChapa("VAC-001");
+        animal.setFechaAdquisicion(LocalDate.of(2023, 3, 10));
+        animal.setEstado(Animal.EstadoAnimal.valueOf("produccion"));
+        animalController.guardarAnimal(animal);
+
+        AnimalAgrupadoController animalAgrupadoController = new AnimalAgrupadoController();
+        // Crear un animal agrupado (ej. colmena de abejas)
+        AnimalAgrupado agrupado = new AnimalAgrupado();
+        agrupado.setNombre("Colmena 1");
+        agrupado.setCantidad(100);
+        agrupado.setTipo(AnimalAgrupado.TipoAgrupado.valueOf("abejas"));
+        agrupado.setFechaInicio(LocalDate.now());
+        animalAgrupadoController.guardarCliente(agrupado);
+
+        IngresoController ingresoController= new IngresoController();
+        // Crear un ingreso
+        Ingreso ingreso = new Ingreso();
+        ingreso.setFecha(LocalDate.now());
+        ingreso.setNumeroFactura("F001");
+        ingreso.setDescripcion("Venta de leche");
+        ingreso.setTipoIngreso(Ingreso.TipoIngreso.venta_agroindustriado);
+        ingresoController.guardarIngreso(ingreso);
+
+        DetalleIngresoController detalleIngresoController= new DetalleIngresoController();
+        // Crear detalle del ingreso
+        DetalleIngreso detalleIngreso = new DetalleIngreso();
+        detalleIngreso.setIngreso(ingreso);
+        detalleIngreso.setProducto(producto);
+        detalleIngreso.setCantidad(new BigDecimal("10.00"));
+        detalleIngreso.setUnidad("litros");
+        detalleIngreso.setPrecioUnitario(new BigDecimal("0.80"));
+        detalleIngreso.setIvaPorcentaje(BigDecimal.ZERO);
+        detalleIngreso.setRetencionPorcentaje(BigDecimal.ZERO);
+        detalleIngreso.setSubtotalBase(new BigDecimal("8.00"));
+        detalleIngreso.setSubtotalIva(BigDecimal.ZERO);
+        detalleIngreso.setSubtotalRetencion(BigDecimal.ZERO);
+        detalleIngreso.setSubtotalFinal(new BigDecimal("8.00"));
+        detalleIngresoController.guardarDetalleIngresoController(detalleIngreso);
+
+
+        EgresoController egresoController= new EgresoController();
+        // Crear un egreso
+        Egreso egreso = new Egreso();
+        egreso.setFecha(LocalDate.now());
+        egreso.setDescripcion("Compra de machete nuevo");
+        egresoController.guardarEgreso(egreso);
+
+
+        DetalleEgresoController detalleEgresoController= new DetalleEgresoController();
+        // Crear detalle del egreso
+        DetalleEgreso detalleEgreso = new DetalleEgreso();
+        detalleEgreso.setEgreso(egreso);
+        detalleEgreso.setHerramienta(herramienta);
+        detalleEgreso.setCantidad(1);
+        detalleEgreso.setPrecioUnitario(15.00);
+        detalleEgreso.setDescripcion("Compra para uso agrícola");
+        detalleEgresoController.guardarDetalle(detalleEgreso);
     }
-
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -62,7 +148,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(83, 102, 119));
 
-        setSize(new java.awt.Dimension(1920, 1080));
+        setSize(new java.awt.Dimension(1600, 1080));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.darkGray, null));
 
@@ -275,7 +361,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        usuarioList=loginController.getClientes();
+
         String userName = txtEmail.getText();
         String userContraseña = new String(jpContraseña.getPassword());
         txtEmail.setText("");
@@ -294,6 +380,7 @@ public class Login extends javax.swing.JFrame implements ActionListener, MouseLi
 
         if (autenticado) {
             JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
+
         } else {
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta.");
         }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,20 +20,20 @@ public class Egreso {
     private int id;
 
     @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private LocalDate fecha;
 
     private double montoTotal;
 
     private String descripcion;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
     @OneToMany(mappedBy = "egreso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleEgreso> detalles;
 
-    public Egreso(Date fecha, double montoTotal, String descripcion, Usuario usuario, List<DetalleEgreso> detalles) {
+    public Egreso(LocalDate fecha, double montoTotal, String descripcion, Usuario usuario, List<DetalleEgreso> detalles) {
         this.fecha = fecha;
         this.montoTotal = montoTotal;
         this.descripcion = descripcion;

@@ -72,4 +72,11 @@ public class Ingreso {
         this.detalles = detalles;
     }
 
+    public TipoIngreso getTipoIngreso() {
+        return tipoIngreso;
+    }
+
+    public void setTipoIngreso(TipoIngreso tipoIngreso) {
+        this.tipoIngreso = tipoIngreso;
+    }
 }

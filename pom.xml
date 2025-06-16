@@ -56,6 +56,11 @@
       <version>RELEASE260</version>
     </dependency>
     <dependency>
+        <groupId>org.jfree</groupId>
+        <artifactId>jfreechart-fx</artifactId>
+        <version>1.0.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.32</version>
