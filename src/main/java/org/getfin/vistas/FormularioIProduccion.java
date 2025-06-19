@@ -89,9 +89,6 @@ public class FormularioIProduccion extends javax.swing.JFrame {
         comboCliente.setEditable(true);
 
         // Llenar con nombres de clientes disponibles
-        clientesDisponibles.forEach(cliente ->
-                comboCliente.addItem(cliente.getNombre() + " " + cliente.getApellido())
-        );
 
         // Configurar autocompletado
         JTextField editorCliente = (JTextField) comboCliente.getEditor().getEditorComponent();
@@ -103,10 +100,6 @@ public class FormularioIProduccion extends javax.swing.JFrame {
                     // Filtrar mientras escribe
                     String filter = editorCliente.getText().toLowerCase();
                     comboCliente.removeAllItems();
-
-                    clientesDisponibles.stream()
-                            .filter(c -> (c.getNombre() + " " + c.getApellido()).toLowerCase().contains(filter))
-                            .forEach(c -> comboCliente.addItem(c.getNombre() + " " + c.getApellido()));
 
                     comboCliente.setPopupVisible(true);
                     editorCliente.setText(filter);
