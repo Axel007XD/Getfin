@@ -1,339 +1,108 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package org.getfin.Componentes;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PiePlot;
+import java.awt.*;
+import javax.swing.*;
+import org.jfree.chart.*;
+import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.JFrame;
+public class Barras extends JPanel {
 
-/**
- *
- * @author USUARIO
- */
-public class Barras extends javax.swing.JPanel {
+    private JPanel jpnBarrasV;
+    private JPanel jpnBarrasP;
+    private JLabel lblConsejo;
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Barras.class.getName());
-
-    /**
-     * Creates new form Barras
-     */
     public Barras() {
         initComponents();
-        DefaultCategoryDataset datos = new DefaultCategoryDataset();
-        datos.addValue(1500, "Gastos", "Enero");
-        datos.addValue(2000, "Ingresos", "Enero");
-        datos.addValue(2000, "Gastos", "Febrero");
-        datos.addValue(3000, "Ingresos", "Febrero");
-        datos.addValue(2500, "Gastos", "Marzo");
-        datos.addValue(3000, "Ingresos", "Marzo");
-        datos.addValue(1200, "Gastos", "Abril");
-        datos.addValue(2000, "Ingresos", "Abril");
-        datos.addValue(1500, "Gastos", "Mayo");
-        datos.addValue(1000, "Ingresos", "Mayo");
-        datos.addValue(3000, "Gastos", "Junio");
-        datos.addValue(1500, "Ingresos", "Junio");
-        JFreeChart grafico = ChartFactory.createBarChart(
-                "Resumen anual",       // Título
-                "Mes",                  // Eje X
-                "Cantidad",             // Eje Y
-                datos                   // Datos
-        );
+        crearGraficos();
+    }
 
-        ChartPanel panelBarra = new ChartPanel(grafico);
-        panelBarra.setPreferredSize(new Dimension(jpnBarrasV.getWidth(), jpnBarrasV.getHeight()));
-        panelBarra.setMouseWheelEnabled(true);
+    private void initComponents() {
+        setLayout(new BorderLayout());
 
-        CategoryPlot plot = (CategoryPlot) grafico.getPlot();
+        JPanel panelSuperior = new JPanel(new GridLayout(1, 4, 10, 10));
+        panelSuperior.setPreferredSize(new Dimension(100, 70));
+
+        panelSuperior.add(crearPanel("Gasto", new Color(183, 209, 163)));
+        panelSuperior.add(crearPanel("Ingreso", new Color(255, 200, 0)));
+        panelSuperior.add(crearPanel("Capital", new Color(94, 57, 41), Color.WHITE));
+        panelSuperior.add(crearPanel("% de ganancia", new Color(255, 200, 0)));
+
+        JPanel panelCentro = new JPanel(new GridLayout(1, 2, 10, 10));
+        jpnBarrasV = new JPanel(new BorderLayout());
+        jpnBarrasP = new JPanel(new BorderLayout());
+        jpnBarrasV.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        jpnBarrasP.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        panelCentro.add(jpnBarrasV);
+        panelCentro.add(jpnBarrasP);
+
+        JPanel panelInferior = new JPanel(new BorderLayout());
+        lblConsejo = new JLabel(" ", SwingConstants.CENTER);
+        lblConsejo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        lblConsejo.setPreferredSize(new Dimension(100, 100));
+        panelInferior.add(lblConsejo, BorderLayout.CENTER);
+
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(panelSuperior, BorderLayout.NORTH);
+        add(panelCentro, BorderLayout.CENTER);
+        add(panelInferior, BorderLayout.SOUTH);
+    }
+
+    private JPanel crearPanel(String texto, Color fondo) {
+        return crearPanel(texto, fondo, Color.BLACK);
+    }
+
+    private JPanel crearPanel(String texto, Color fondo, Color textoColor) {
+        JPanel panel = new JPanel();
+        panel.setBackground(fondo);
+        JLabel label = new JLabel(texto);
+        label.setFont(new Font("Open Sans", Font.BOLD, 14));
+        label.setForeground(textoColor);
+        panel.add(label);
+        return panel;
+    }
+
+    private void crearGraficos() {
+        // Gráfico de barras
+        DefaultCategoryDataset datasetBarra = new DefaultCategoryDataset();
+        datasetBarra.addValue(1500, "Gastos", "Enero");
+        datasetBarra.addValue(2000, "Ingresos", "Enero");
+        datasetBarra.addValue(2000, "Gastos", "Febrero");
+        datasetBarra.addValue(3000, "Ingresos", "Febrero");
+        datasetBarra.addValue(2500, "Gastos", "Marzo");
+        datasetBarra.addValue(3000, "Ingresos", "Marzo");
+        datasetBarra.addValue(1200, "Gastos", "Abril");
+        datasetBarra.addValue(2000, "Ingresos", "Abril");
+
+        JFreeChart chartBarra = ChartFactory.createBarChart(
+                "Resumen anual", "Mes", "Cantidad", datasetBarra);
+
+        CategoryPlot plot = chartBarra.getCategoryPlot();
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
-
-// Cambiar color de la serie 0 (Ventas)
         renderer.setSeriesPaint(0, new Color(183, 209, 163));
         renderer.setSeriesPaint(1, new Color(255, 200, 0));
 
-        jpnBarrasV.removeAll(); // Limpia el panel primero si ya tiene algo
-        jpnBarrasV.setLayout(new BorderLayout()); // Asegura que el layout lo acomode bien
-        jpnBarrasV.add(panelBarra, BorderLayout.CENTER); // Lo agrega centrado
-        jpnBarrasV.revalidate(); // Refresca el layout
-        jpnBarrasV.repaint(); // Dibuja el nuevo gráfico
+        ChartPanel chartPanelBarra = new ChartPanel(chartBarra);
+        chartPanelBarra.setMouseWheelEnabled(true);
+        jpnBarrasV.add(chartPanelBarra, BorderLayout.CENTER);
 
-        DefaultPieDataset datosP = new DefaultPieDataset();
-        datosP.setValue("Gastos", 1500);
-        datosP.setValue("Ingresos", 2000);
-        datosP.setValue("Gastos", 2000);
-        datosP.setValue("Ingresos", 3000);
-        datosP.setValue("Gastos", 2500);
-        datosP.setValue("Ingresos", 3000);
-        datosP.setValue("Gastos", 1200);
-        datosP.setValue("Ingresos", 2000);
-        datosP.setValue("Gastos", 1500);
-        datosP.setValue("Ingresos", 1000);
-        datosP.setValue("Gastos", 3000);
-        datosP.setValue("Ingresos", 1500);
+        // Gráfico de pastel
+        DefaultPieDataset datasetPastel = new DefaultPieDataset();
+        datasetPastel.setValue("Gastos", 10000);
+        datasetPastel.setValue("Ingresos", 12500);
 
-        JFreeChart graficoPastel = ChartFactory.createPieChart(
-                "Resumen anual", datosP, true, true, false
-        );
+        JFreeChart chartPastel = ChartFactory.createPieChart(
+                "Resumen anual", datasetPastel, true, true, false);
+        PiePlot piePlot = (PiePlot) chartPastel.getPlot();
+        piePlot.setSectionPaint("Gastos", new Color(183, 209, 163));
+        piePlot.setSectionPaint("Ingresos", new Color(100, 180, 255));
 
-        ChartPanel panelPastel = new ChartPanel(graficoPastel);
-        panelPastel.setPreferredSize(new Dimension(jpnBarrasP.getWidth(), jpnBarrasP.getHeight()));
-        panelPastel.setMouseWheelEnabled(true);
-
-        PiePlot plotPastel = (PiePlot) graficoPastel.getPlot();
-        plotPastel.setSectionPaint("Gastos", new Color(183, 209, 163));
-        plotPastel.setSectionPaint("Ingresos", new Color(100, 180, 255));
-
-        jpnBarrasP.removeAll(); // Limpia el panel primero si ya tiene algo
-        jpnBarrasP.setLayout(new BorderLayout()); // Asegura que el layout lo acomode bien
-        jpnBarrasP.add(panelPastel, BorderLayout.CENTER); // Lo agrega centrado
-        setVisible(true); // Hace visible el JFrame
-        jpnBarrasP.revalidate(); // Refresca el layout
-        jpnBarrasP.repaint(); // Dibuja el nuevo gráfico
-
+        ChartPanel chartPanelPastel = new ChartPanel(chartPastel);
+        chartPanelPastel.setMouseWheelEnabled(true);
+        jpnBarrasP.add(chartPanelPastel, BorderLayout.CENTER);
+        setVisible(true);
     }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        jPanel1 = new javax.swing.JPanel();
-        jpnGasto = new javax.swing.JPanel();
-        lblGasto = new javax.swing.JLabel();
-        jpnIngreso = new javax.swing.JPanel();
-        lblIngreso = new javax.swing.JLabel();
-        jpnCapital = new javax.swing.JPanel();
-        lblCapital = new javax.swing.JLabel();
-        jpnGanancia = new javax.swing.JPanel();
-        lblganancia = new javax.swing.JLabel();
-        jpnBarrasV = new javax.swing.JPanel();
-        jpnConsejo = new javax.swing.JPanel();
-        lblConsejo = new javax.swing.JLabel();
-        jpnBarrasP = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jpnGasto.setBackground(new java.awt.Color(183, 209, 163));
-
-        lblGasto.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        lblGasto.setText("Gasto");
-
-        javax.swing.GroupLayout jpnGastoLayout = new javax.swing.GroupLayout(jpnGasto);
-        jpnGasto.setLayout(jpnGastoLayout);
-        jpnGastoLayout.setHorizontalGroup(
-                jpnGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpnGastoLayout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(lblGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jpnGastoLayout.setVerticalGroup(
-                jpnGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpnGastoLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblGasto)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jpnIngreso.setBackground(new java.awt.Color(255, 200, 0));
-        jpnIngreso.setForeground(new java.awt.Color(128, 128, 128));
-
-        lblIngreso.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        lblIngreso.setText("Ingreso");
-
-        javax.swing.GroupLayout jpnIngresoLayout = new javax.swing.GroupLayout(jpnIngreso);
-        jpnIngreso.setLayout(jpnIngresoLayout);
-        jpnIngresoLayout.setHorizontalGroup(
-                jpnIngresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpnIngresoLayout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(lblIngreso)
-                                .addContainerGap(30, Short.MAX_VALUE))
-        );
-        jpnIngresoLayout.setVerticalGroup(
-                jpnIngresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpnIngresoLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblIngreso)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jpnCapital.setBackground(new java.awt.Color(94, 57, 41));
-
-        lblCapital.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        lblCapital.setForeground(new java.awt.Color(255, 255, 255));
-        lblCapital.setText("Capital");
-
-        javax.swing.GroupLayout jpnCapitalLayout = new javax.swing.GroupLayout(jpnCapital);
-        jpnCapital.setLayout(jpnCapitalLayout);
-        jpnCapitalLayout.setHorizontalGroup(
-                jpnCapitalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnCapitalLayout.createSequentialGroup()
-                                .addContainerGap(33, Short.MAX_VALUE)
-                                .addComponent(lblCapital)
-                                .addGap(45, 45, 45))
-        );
-        jpnCapitalLayout.setVerticalGroup(
-                jpnCapitalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpnCapitalLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblCapital)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jpnGanancia.setBackground(new java.awt.Color(255, 200, 0));
-        jpnGanancia.setPreferredSize(new java.awt.Dimension(130, 67));
-
-        lblganancia.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        lblganancia.setText("%  de ganancia");
-
-        javax.swing.GroupLayout jpnGananciaLayout = new javax.swing.GroupLayout(jpnGanancia);
-        jpnGanancia.setLayout(jpnGananciaLayout);
-        jpnGananciaLayout.setHorizontalGroup(
-                jpnGananciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpnGananciaLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblganancia)
-                                .addContainerGap(8, Short.MAX_VALUE))
-        );
-        jpnGananciaLayout.setVerticalGroup(
-                jpnGananciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpnGananciaLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblganancia)
-                                .addContainerGap(41, Short.MAX_VALUE))
-        );
-
-        jpnBarrasV.setBackground(new java.awt.Color(255, 255, 255));
-        jpnBarrasV.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-        jpnBarrasV.setLayout(new java.awt.BorderLayout());
-
-        lblConsejo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-
-        javax.swing.GroupLayout jpnConsejoLayout = new javax.swing.GroupLayout(jpnConsejo);
-        jpnConsejo.setLayout(jpnConsejoLayout);
-        jpnConsejoLayout.setHorizontalGroup(
-                jpnConsejoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnConsejoLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblConsejo, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-        );
-        jpnConsejoLayout.setVerticalGroup(
-                jpnConsejoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpnConsejoLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblConsejo, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                                .addContainerGap())
-        );
-
-        jpnBarrasP.setBackground(new java.awt.Color(255, 255, 255));
-        jpnBarrasP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-        jpnBarrasP.setLayout(new java.awt.BorderLayout());
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 121, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jpnBarrasV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addComponent(jpnGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(jpnIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jpnCapital, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jpnBarrasP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(jpnConsejo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGap(449, 449, 449)
-                                                        .addComponent(jpnGanancia, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(23, 23, 23))
-        );
-        jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jpnGanancia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jpnCapital, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jpnIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jpnGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jpnBarrasV, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                        .addComponent(jpnBarrasP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jpnConsejo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(19, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-    }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jpnBarrasP;
-    private javax.swing.JPanel jpnBarrasV;
-    private javax.swing.JPanel jpnCapital;
-    private javax.swing.JPanel jpnConsejo;
-    private javax.swing.JPanel jpnGanancia;
-    private javax.swing.JPanel jpnGasto;
-    private javax.swing.JPanel jpnIngreso;
-    private javax.swing.JLabel lblCapital;
-    private javax.swing.JLabel lblConsejo;
-    private javax.swing.JLabel lblGasto;
-    private javax.swing.JLabel lblIngreso;
-    private javax.swing.JLabel lblganancia;
 }

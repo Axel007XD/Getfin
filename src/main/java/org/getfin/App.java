@@ -10,6 +10,6 @@ public class App {
         //new Login();
         //new VentanaPrincipal();
         new VentanaPrincipal();
-
+        //new Barraopciones().setVisible(true);
     }
 }
