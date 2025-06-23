@@ -100,7 +100,7 @@ public class FormularioIProduccion extends javax.swing.JFrame {
                     // Filtrar mientras escribe
                     String filter = editorCliente.getText().toLowerCase();
                     comboCliente.removeAllItems();
-
+                    
                     comboCliente.setPopupVisible(true);
                     editorCliente.setText(filter);
                 }
