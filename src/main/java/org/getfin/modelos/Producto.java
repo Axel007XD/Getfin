@@ -24,12 +24,6 @@ public class Producto {
     @Column(nullable = false)
     private CategoriaProducto categoria;
 
-    @Column(nullable = true)
-    private BigDecimal ivaPorcentaje;
-
-    @Column(nullable = true)
-    private BigDecimal retencionPorcentaje;
-
     public enum CategoriaProducto {cosechado, animal, agroindustriado}
 
     @OneToMany(mappedBy = "producto")
@@ -40,14 +34,10 @@ public class Producto {
 
     public Producto(
             String nombre,
-            CategoriaProducto categoria,
-            BigDecimal ivaPorcentaje,
-            BigDecimal retencionPorcentaje
+            CategoriaProducto categoria
     ) {
         this.nombre = nombre;
         this.categoria = categoria;
-        this.ivaPorcentaje = ivaPorcentaje;
-        this.retencionPorcentaje = retencionPorcentaje;
     }
 
 }

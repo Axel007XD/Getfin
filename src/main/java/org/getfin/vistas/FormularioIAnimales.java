@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FormularioIP extends JFrame {
+public class FormularioIAnimales extends JFrame {
 
     private final AnimalController animalController;
     private final AnimalAgrupadoController agrupadoController;
@@ -33,7 +33,7 @@ public class FormularioIP extends JFrame {
     private JRadioButton radioGrupo;
     private ButtonGroup buttonGroup;
 
-    public FormularioIP() {
+    public FormularioIAnimales() {
         this.animalController = AnimalController.getInstance();
         this.agrupadoController = AnimalAgrupadoController.getInstance();
 
@@ -219,6 +219,6 @@ public class FormularioIP extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new FormularioIP().setVisible(true));
+        SwingUtilities.invokeLater(() -> new FormularioIAnimales().setVisible(true));
     }
 }

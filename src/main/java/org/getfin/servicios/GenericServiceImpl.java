@@ -1,9 +1,8 @@
 package org.getfin.servicios;
-
 import org.getfin.dao.GenericDAOImpl;
 import org.getfin.dao.IGenericDAO;
 import org.hibernate.SessionFactory;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +40,16 @@ public class GenericServiceImpl<T> implements IGenericService<T> {
 
     @Override
     public T getByName(String name) {
-        return null;
+        String field = "nombre";
+        if (cl.getSimpleName().equals("Usuario")) {
+            field = "nombreUsuario";
+        }
+        String hql = "FROM " + cl.getSimpleName() + " e WHERE e." + field + " = :n";
+        Map<String, Object> params = new HashMap<>();
+        params.put("n", name);
+        List<T> list = dao.query(hql, params);
+        return (list != null && !list.isEmpty()) ? list.get(0) : null;
+
     }
 
     @Override
@@ -74,6 +82,12 @@ public class GenericServiceImpl<T> implements IGenericService<T> {
     @Override
     public List<T> query(String hsql, Map<String, Object> params) {
         return (List<T>) dao.query(hsql,params);
+    }
+
+    @Override
+    public T findOne(String hsql, Map<String, Object> params) {
+        List<T> list = dao.query(hsql, params);
+        return (list != null && !list.isEmpty()) ? list.get(0) : null;
     }
 
 }

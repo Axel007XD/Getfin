@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GenericDAOImpl<T> implements  IGenericDAO<T>{
-
+    private Class<T> cl;
     private SessionFactory sessionFactory;
 
     public GenericDAOImpl(Class<T> cl, SessionFactory sessionFactory) {
@@ -79,6 +79,19 @@ public class GenericDAOImpl<T> implements  IGenericDAO<T>{
             session.getTransaction().commit();
             return result;
         }
+
+    @Override
+    public T findOne(String hsql, Map<String, Object> params) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query<T> query = session.createQuery(hsql, cl);
+        if (params != null) {
+            for (String key : params.keySet()) {
+                query.setParameter(key, params.get(key));
+            }
+        }
+        return query.uniqueResult();
+    }
 
 }
 

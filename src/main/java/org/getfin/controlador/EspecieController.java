@@ -7,11 +7,11 @@ import org.getfin.util.HibernateUtil;
 
 import java.util.List;
 
-public class RazaController {
+public class EspecieController {
 
-    private static RazaController instance;
+    private static EspecieController instance;
 
-    public RazaController(){}
+    public EspecieController(){}
 
     public void guardarCliente(Especies especies){
         IGenericService<Especies> razaGenericService = new GenericServiceImpl<>(Especies.class, HibernateUtil.getSessionFactory());
@@ -30,9 +30,9 @@ public class RazaController {
         return clienteIGenericService.getAll();
     }
 
-    public static RazaController getInstance() {
+    public static EspecieController getInstance() {
         if (instance == null) {
-            instance = new RazaController();
+            instance = new EspecieController();
         }
         return instance;
     }

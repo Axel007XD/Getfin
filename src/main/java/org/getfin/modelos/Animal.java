@@ -3,7 +3,7 @@ package org.getfin.modelos;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.getfin.modelos.Raza;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name = "animales")
 @Data
 @NoArgsConstructor
-
 public class Animal {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAnimal;
@@ -25,20 +24,18 @@ public class Animal {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoAnimal estado;
-    public enum EstadoAnimal { cria, desarrollo, produccion, vendido, muerto, extrabiado }
+    public enum EstadoAnimal { cria, desarrollo, produccion, vendido, muerto, extraviado }
 
     @ManyToOne
-    @JoinColumn(name = "id_raza")
-    private Raza raza;
+    @JoinColumn(name = "idEspecie", nullable = false)
+    private Especies especies;
 
     @OneToMany(mappedBy = "animal")
     private List<DetalleIngreso> detallesIngresos;
 
-    public Animal (String chapa, LocalDate fechaAdquisicion, EstadoAnimal estado) {
+    public Animal(String chapa, LocalDate fechaAdquisicion, EstadoAnimal estado) {
         this.chapa = chapa;
         this.fechaAdquisicion = fechaAdquisicion;
         this.estado = estado;
     }
-
-
 }

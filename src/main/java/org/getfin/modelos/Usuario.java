@@ -1,22 +1,20 @@
-// Usuario.java
 package org.getfin.modelos;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Table(name = "usuarios")
 @Data
 @NoArgsConstructor
-
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, name = "nombre")
     private String nombreUsuario;
 
     @Column(nullable = false)
@@ -26,7 +24,9 @@ public class Usuario {
     @Column(nullable = false)
     private Rol rol;
 
-    public enum Rol { admin }
+    public enum Rol {
+        admin
+    }
 
     public Usuario(String nombreUsuario, String contrasena, Rol rol) {
         this.nombreUsuario = nombreUsuario;

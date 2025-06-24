@@ -1,4 +1,3 @@
-// AnimalAgrupado.java
 package org.getfin.modelos;
 
 import jakarta.persistence.*;
@@ -12,7 +11,6 @@ import java.util.List;
 @Table(name = "animales_agrupados")
 @Data
 @NoArgsConstructor
-
 public class AnimalAgrupado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +29,10 @@ public class AnimalAgrupado {
 
     @Column(nullable = false)
     private LocalDate fechaInicio;
+
+    @ManyToOne
+    @JoinColumn(name = "idEspecie", nullable = false)
+    private Especies especies;
 
     @OneToMany(mappedBy = "agrupacion")
     private List<DetalleIngreso> detallesIngresos;

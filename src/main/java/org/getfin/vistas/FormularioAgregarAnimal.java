@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FormularioIProduccion extends javax.swing.JFrame {
+public class FormularioAgregarAnimal extends javax.swing.JFrame {
 
-    private static final Logger logger = Logger.getLogger(FormularioIProduccion.class.getName());
+    private static final Logger logger = Logger.getLogger(FormularioAgregarAnimal.class.getName());
     private final AnimalController animalController;
     private final ClienteController clienteController;
     private List<Animal> animalesDisponibles;
     private List<Cliente> clientesDisponibles;
 
-    public FormularioIProduccion() {
+    public FormularioAgregarAnimal() {
         this.animalController = AnimalController.getInstance();
         this.clienteController = ClienteController.getInstance(); // Asume que existe ClienteController
         initComponents();
@@ -370,11 +370,11 @@ public class FormularioIProduccion extends javax.swing.JFrame {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
-            Logger.getLogger(FormularioIProduccion.class.getName()).log(Level.SEVERE, "Error al configurar look and feel", ex);
+            Logger.getLogger(FormularioAgregarAnimal.class.getName()).log(Level.SEVERE, "Error al configurar look and feel", ex);
         }
 
         java.awt.EventQueue.invokeLater(() -> {
-            new FormularioIProduccion().setVisible(true);
+            new FormularioAgregarAnimal().setVisible(true);
         });
     }
 

@@ -89,13 +89,17 @@ public class IngresoVista extends JPanel {
     }
 
     private void btnIngresarActionPerformed() {
-        DefaultTableModel model = (DefaultTableModel) tblTablaingreso.getModel();
-        if (model.getRowCount() > 0) {
-            model.addRow(new Object[] { null, null, null, null, null, null, null, null });
-        } else {
-            model.setRowCount(0);
-            JOptionPane.showMessageDialog(this, "NO hay datos para mostrar, por favor ingrese un nuevo ingreso.");
-        }
+
+        Registroingreso registroingreso = new Registroingreso();
+        registroingreso.setVisible(true);
+
+//        DefaultTableModel model = (DefaultTableModel) tblTablaingreso.getModel();
+//        if (model.getRowCount() > 0) {
+//            model.addRow(new Object[] { null, null, null, null, null, null, null, null });
+//        } else {
+//            model.setRowCount(0);
+//            JOptionPane.showMessageDialog(this, "NO hay datos para mostrar, por favor ingrese un nuevo ingreso.");
+//        }
     }
 
     private void btnEditarActionPerformed() {
