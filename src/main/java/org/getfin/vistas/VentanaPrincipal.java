@@ -1,7 +1,5 @@
 package org.getfin.vistas;
-
 import org.getfin.Componentes.Barras;
-
 import javax.swing.*;
 import java.awt.*;
 

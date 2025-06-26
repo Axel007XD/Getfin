@@ -167,7 +167,7 @@ public class Login extends JFrame implements MouseListener {
 
         Usuario usuario = usuarioController.getUsuarioPorNombre(userName);
         if (usuario != null && BCrypt.checkpw(userPass, usuario.getContrasena())) {
-            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
+
             dispose();
             new VentanaPrincipal().setVisible(true);
         } else {

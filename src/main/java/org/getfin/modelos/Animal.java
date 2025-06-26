@@ -33,9 +33,10 @@ public class Animal {
     @OneToMany(mappedBy = "animal")
     private List<DetalleIngreso> detallesIngresos;
 
-    public Animal(String chapa, LocalDate fechaAdquisicion, EstadoAnimal estado) {
+    public Animal(String chapa, LocalDate fechaAdquisicion, EstadoAnimal estado, Especies especies) {
         this.chapa = chapa;
         this.fechaAdquisicion = fechaAdquisicion;
         this.estado = estado;
+        this.especies = especies;
     }
 }

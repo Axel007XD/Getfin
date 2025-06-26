@@ -19,17 +19,21 @@ public class AnimalAgrupado {
     @Column(nullable = false)
     private String nombre;
 
+    /*
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoAgrupado tipo;
     public enum TipoAgrupado { peces, abejas, otro }
+    * */
+
 
     @Column(nullable = false)
     private Integer cantidad;
 
     @Column(nullable = false)
     private LocalDate fechaInicio;
-
+    /*
+    * */
     @ManyToOne
     @JoinColumn(name = "idEspecie", nullable = false)
     private Especies especies;
@@ -37,9 +41,10 @@ public class AnimalAgrupado {
     @OneToMany(mappedBy = "agrupacion")
     private List<DetalleIngreso> detallesIngresos;
 
-    public AnimalAgrupado(String nombre, TipoAgrupado tipo, Integer cantidad, LocalDate fechaInicio) {
+    public AnimalAgrupado(String nombre, Especies especies ,  Integer cantidad, LocalDate fechaInicio) {
         this.nombre = nombre;
-        this.tipo = tipo;
+        this.especies = especies;
+        //this.tipo = tipo;
         this.cantidad = cantidad;
         this.fechaInicio = fechaInicio;
     }

@@ -10,9 +10,15 @@ public class FormularioICosecha extends JFrame {
     private JTextField txtFecha, txtFactura, txtNombre,
             txtMontoNeto, txtMonto, txtIva, txtRetencion, txtFinal;
 
+    private RegistroIngreso.RegistroData registroAEditar = null;
+
     public FormularioICosecha(RegistroIngreso registroIngreso) {
         this.registroIngreso = registroIngreso;
         initComponents();
+    }
+
+    public void setRegistroAEditar(RegistroIngreso.RegistroData registroAEditar) {
+        this.registroAEditar = registroAEditar;
     }
 
     private void initComponents() {
@@ -56,7 +62,28 @@ public class FormularioICosecha extends JFrame {
                 txtRetencion.getText(),
                 txtFinal.getText()
         );
-        registroIngreso.agregarRegistro(headers, values);
+
+        if (registroAEditar != null) {
+            registroIngreso.actualizarRegistro(registroAEditar, values);
+            JOptionPane.showMessageDialog(this, "Registro actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            registroIngreso.agregarRegistro(headers, values, "cosecha");
+            JOptionPane.showMessageDialog(this, "Registro agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+
         this.dispose();
+    }
+
+    public void cargarDatos(List<String> datos) {
+        if (datos.size() >= 8) {
+            txtFecha.setText(datos.get(0));
+            txtFactura.setText(datos.get(1));
+            txtNombre.setText(datos.get(2));
+            txtMontoNeto.setText(datos.get(3));
+            txtMonto.setText(datos.get(4));
+            txtIva.setText(datos.get(5));
+            txtRetencion.setText(datos.get(6));
+            txtFinal.setText(datos.get(7));
+        }
     }
 }
