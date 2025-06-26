@@ -57,8 +57,7 @@ public class VentanaPrincipal extends JFrame {
         ingresoVista.setVisible(true);
         // Aquí puedes agregar el panel de ingreso a un contenedor principal
         //Por ejemplo, si tienes un JPanel principal:
-         contenido.removeAll();
-         contenido.add(ingresoVista);
+         contenido.removeAll();         contenido.add(ingresoVista);
          contenido.revalidate();
          contenido.repaint();
     }
